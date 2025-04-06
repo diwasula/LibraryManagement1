@@ -15,17 +15,17 @@ public:
 
     Book() { year = 0; }//this is the constructor
 
-    string getTitle() { return title; } //these functions are to get the book data
-    string getAuthor() { return author; }
-    string getPublisher() { return publisher; }
-    int getYear() { return year; }
-    string getIsbn() { return Isbn; }
+    string GetTitle() { return title; } //these functions are to get the book data
+    string GetAuthor() { return author; }
+    string GetPublisher() { return publisher; }
+    int GetYear() { return year; }
+    string GetIsbn() { return Isbn; }
 
     void SetTitle(string tit) { title = tit; }  //these functions to are set the book data
-    void setAuthor(string auth) { author = auth; }
-    void setpublisher(string pub) { publisher = pub; }
-    void setYear(int yea) { year = yea; }
-    void setIsbn(string isbn) { Isbn = isbn; }
+    void SetAuthor(string auth) { author = auth; }
+    void SetPublisher(string pub) { publisher = pub; }
+    void SetYear(int yea) { year = yea; }
+    void SetIsbn(string isbn) { Isbn = isbn; }
 
     void BookDisplay() {    //this function to display book informantions
         cout << "Book title: " << title << endl;
@@ -64,14 +64,15 @@ public:
         if (BooksMap.find(isbn) == BooksMap.end()) {
             Book NewBook;
             NewBook.SetTitle(title);
-            NewBook.setAuthor(author);
-            NewBook.setpublisher(publisher);
-            NewBook.setYear(year);
-            NewBook.setIsbn(isbn);
+            NewBook.SetAuthor(author);
+            NewBook.SetPublisher(publisher);
+            NewBook.SetYear(year);
+            NewBook.SetIsbn(isbn);
 
-			Books.push_back(NewBook); //this to add the book to the vector
-			BooksMap[isbn] = NewBook; //this to add the book to the map
-			cout << "\nBook added successfully\n" << endl;
+		Books.push_back(NewBook); //this to add the book to the vector
+		BooksMap[isbn] = NewBook; //this to add the book to the map
+		
+		cout << "\nBook added successfully\n" << endl;
 		}
 		else {
 			cout << "This book is already exists" << endl;
@@ -94,7 +95,7 @@ public:
             BookEdit.SetTitle(title); //this to set the new title for the book
 
             for (int i = 0; i < Books.size(); i++) { //this loop to edit the vector and we use this loop to edit the book in the vector
-                if (Books[i].getIsbn() == isbn) { //this to check if the book is in the vector
+                if (Books[i].GetIsbn() == isbn) { //this to check if the book is in the vector
                     Books[i].SetTitle(title); //this to set the new title for the book
                 }
                 break;
@@ -121,11 +122,11 @@ public:
             getline(cin, author);
 
             Book BookEdit = BooksMap[isbn];
-            BookEdit.setAuthor(author);
+            BookEdit.SetAuthor(author);
 
             for (int i = 0; i < Books.size(); i++) {
-                if (Books[i].getIsbn() == isbn) {
-                    Books[i].setAuthor(author);
+                if (Books[i].GetIsbn() == isbn) {
+                    Books[i].SetAuthor(author);
                 }
                 break;
             }
@@ -153,11 +154,11 @@ public:
             cin.ignore();
 
             Book BookEdit = BooksMap[isbn];
-            BookEdit.setYear(year);
+            BookEdit.SetYear(year);
 
             for (int i = 0; i < Books.size(); i++) {
-                if (Books[i].getIsbn() == isbn) {
-                    Books[i].setYear(year);
+                if (Books[i].GetIsbn() == isbn) {
+                    Books[i].SetYear(year);
                 }
                 break;
             }
@@ -184,8 +185,8 @@ public:
             BookEdit.setpublisher(publisher);
 
             for (int i = 0; i < Books.size(); i++) {
-                if (Books[i].getIsbn() == isbn) {
-                    Books[i].setpublisher(publisher);
+                if (Books[i].GetIsbn() == isbn) {
+                    Books[i].SetPublisher(publisher);
                 }
                 break;
             }
@@ -209,11 +210,11 @@ public:
             cin.ignore();
 
             Book BookEdit = BooksMap[isbn];
-            BookEdit.setIsbn(ISBN);
+            BookEdit.SetIsbn(ISBN);
 
             for (int i = 0; i < Books.size(); i++) {
-                if (Books[i].getIsbn() == isbn) {
-                    Books[i].setIsbn(ISBN);
+                if (Books[i].GetIsbn() == isbn) {
+                    Books[i].SetIsbn(ISBN);
 
                 }
                 break;
@@ -234,7 +235,7 @@ public:
         cout << "Enter the ISBN of the book that you want to delete: ";
         getline(cin, isbn);
 
-		cout << "I want to delete: [" << BooksMap[isbn].getTitle() << "] (y / n)" << endl; //this to confirm the book that the user want to delete
+		cout << "I want to delete: [" << BooksMap[isbn].GetTitle() << "] (y / n)" << endl; //this to confirm the book that the user want to delete
         cin >> RemoveChoice;
         cin.ignore();
 
@@ -243,7 +244,7 @@ public:
 				BooksMap.erase(isbn); //this to delete the book from the map
 
                 for (int i = 0;i < Books.size(); i++) {
-                    if (Books[i].getIsbn() == isbn) {
+                    if (Books[i].GetIsbn() == isbn) {
                         Books.erase(Books.begin() + i); //this to delete the book from the vector
 
                     }
@@ -297,9 +298,9 @@ public:
         if (BooksMap.find(isbn) != BooksMap.end()) {
             Book BookSearch = BooksMap[isbn]; //this to get the book from the map by the isbn
 
-            cout <<"TITLE: " << BookSearch.getTitle() << " | "; //this to display the book informantions
-           cout <<"AUTHOR: " << BookSearch.getAuthor() << " | ";
-           cout << "ISBN: " << BookSearch.getIsbn() << " | ";
+            cout <<"TITLE: " << BookSearch.GetTitle() << " | "; //this to display the book informantions
+           cout <<"AUTHOR: " << BookSearch.GetAuthor() << " | ";
+           cout << "ISBN: " << BookSearch.GetIsbn() << " | ";
 			cout <<"PUBLISHER: " << BookSearch.getPublisher() << " | ";
 			cout <<"YEAR: " << BookSearch.getYear();
 			cout << "\n-------------------------------------" << endl;
