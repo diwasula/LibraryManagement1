@@ -10,4 +10,4 @@ display the books
 
 Technologies:
 Language : C++
-Data strcture : Vector, Hash table (map)
+Data strcture : Vector, red black tree (map)
