@@ -182,7 +182,7 @@ public:
             getline(cin, publisher);
 
             Book BookEdit = BooksMap[isbn];
-            BookEdit.setpublisher(publisher);
+            BookEdit.SetSublisher(publisher);
 
             for (int i = 0; i < Books.size(); i++) {
                 if (Books[i].GetIsbn() == isbn) {
@@ -301,8 +301,8 @@ public:
             cout <<"TITLE: " << BookSearch.GetTitle() << " | "; //this to display the book informantions
            cout <<"AUTHOR: " << BookSearch.GetAuthor() << " | ";
            cout << "ISBN: " << BookSearch.GetIsbn() << " | ";
-			cout <<"PUBLISHER: " << BookSearch.getPublisher() << " | ";
-			cout <<"YEAR: " << BookSearch.getYear();
+			cout <<"PUBLISHER: " << BookSearch.GetPublisher() << " | ";
+			cout <<"YEAR: " << BookSearch.GetYear();
 			cout << "\n-------------------------------------" << endl;
 
             cout << "\n" << endl;
