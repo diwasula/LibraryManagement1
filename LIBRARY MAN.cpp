@@ -182,7 +182,7 @@ public:
             getline(cin, publisher);
 
             Book BookEdit = BooksMap[isbn];
-            BookEdit.SetSublisher(publisher);
+            BookEdit.SetPublisher(publisher);
 
             for (int i = 0; i < Books.size(); i++) {
                 if (Books[i].GetIsbn() == isbn) {
