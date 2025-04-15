@@ -2,6 +2,7 @@
 #include <vector>
 #include <map>
 #include <string> 
+#include <fstream>
 using namespace std;
 
 class Book {     //this class is for book informations
@@ -45,6 +46,42 @@ private:
     map<string, Book> BooksMap;
 
 public:
+    void SaveToFile() {
+        ofstream file("Books.txt");
+        if (!file) {
+            cout << "ERROR!" << endl;
+        }
+
+        for (Book&newbook : Books  ) {
+            file << newbook.GetTitle() << endl;
+            file << newbook.GetAuthor() << endl;
+            file << newbook.GetPublisher() << endl;
+            file << newbook.GetYear() << endl;
+            file << newbook.GetIsbn() << endl;
+        }
+        file.close();
+    }
+
+    void LoadFromFile() {
+        ifstream file("Books.txt");
+        if (!file) {
+            cout << "ERROR!" << endl;
+        }
+        else {
+            string title, author, publisher, isbn;
+            int year;
+            while (file >> title >> author >> publisher >> year >> isbn) {
+                Book newbook;
+                newbook.SetTitle(title);
+                newbook.SetAuthor(author);
+                newbook.SetPublisher(publisher);
+                newbook.SetYear(year);
+                newbook.SetIsbn(isbn);
+                Books.push_back(newbook);
+            }
+        }
+        file.close();
+    }
     void AddBook() {
         string title, author, isbn, publisher;
         int year;
@@ -69,13 +106,14 @@ public:
             NewBook.SetYear(year);
             NewBook.SetIsbn(isbn);
 
-		Books.push_back(NewBook); //this to add the book to the vector
-		BooksMap[isbn] = NewBook; //this to add the book to the map
-		
-		cout << "\nBook added successfully\n" << endl;
-		}
-		else {
-			cout << "This book is already exists" << endl;
+            Books.push_back(NewBook); //this to add the book to the vector
+            BooksMap[isbn] = NewBook; //this to add the book to the map
+
+            cout << "\nBook added successfully\n" << endl;
+            SaveToFile(); //this to save the book to the file
+        }
+        else {
+            cout << "This book is already exists" << endl;
         }
 
     }
@@ -100,6 +138,7 @@ public:
                 }
                 break;
             }
+            SaveToFile(); //this to save the book to the file
             cout << "\nTitle edited successfully\n" << endl;
         }
 
@@ -131,6 +170,7 @@ public:
                 break;
             }
             cout << "\nAuthor edited successfully\n" << endl;
+            SaveToFile(); //this to save the book to the file
         }
 
         else {
@@ -163,6 +203,7 @@ public:
                 break;
             }
             cout << "\nYear edited successfully\n" << endl;
+            SaveToFile(); //this to save the book to the file
         }
 
         else {
@@ -191,6 +232,7 @@ public:
                 break;
             }
             cout << "\nPublisher edited successfully\n" << endl;
+            SaveToFile(); //this to save the book to the file
         }
 
         else {
@@ -220,6 +262,7 @@ public:
                 break;
             }
             cout << "\nISBN edited successfully\n" << endl;
+            SaveToFile(); //this to save the book to the file
         }
 
         else {
@@ -235,13 +278,14 @@ public:
         cout << "Enter the ISBN of the book that you want to delete: ";
         getline(cin, isbn);
 
-		cout << "I want to delete: [" << BooksMap[isbn].GetTitle() << "] (y / n)" << endl; //this to confirm the book that the user want to delete
+        cout << "I want to delete: [" << BooksMap[isbn].GetTitle() << "] (y / n)" << endl; //this to confirm the book that the user want to delete
         cin >> RemoveChoice;
         cin.ignore();
 
-        if (RemoveChoice == 'y' || RemoveChoice == 'Y') { 
+        if (RemoveChoice == 'y' || RemoveChoice == 'Y') {
             if (BooksMap.find(isbn) != BooksMap.end()) {
-				BooksMap.erase(isbn); //this to delete the book from the map
+                BooksMap.erase(isbn); //this to delete the book from the map
+
 
                 for (int i = 0;i < Books.size(); i++) {
                     if (Books[i].GetIsbn() == isbn) {
@@ -250,6 +294,7 @@ public:
                     }
                     break;
                 }
+                SaveToFile(); //this to save the book to the file
                 cout << "\nBook deleted successfully\n";
             }
             else {
@@ -273,6 +318,7 @@ public:
         if (ClearChoice == 'y' || ClearChoice == 'Y') {
             BooksMap.clear(); //this to clear the map
             Books.clear(); //this to clear the vector
+            SaveToFile(); //this to save the book to the file
             cout << "\nLibrary cleared successfully" << endl;
         }
 
@@ -298,12 +344,12 @@ public:
         if (BooksMap.find(isbn) != BooksMap.end()) {
             Book BookSearch = BooksMap[isbn]; //this to get the book from the map by the isbn
 
-            cout <<"TITLE: " << BookSearch.GetTitle() << " | "; //this to display the book informantions
-           cout <<"AUTHOR: " << BookSearch.GetAuthor() << " | ";
-           cout << "ISBN: " << BookSearch.GetIsbn() << " | ";
-			cout <<"PUBLISHER: " << BookSearch.GetPublisher() << " | ";
-			cout <<"YEAR: " << BookSearch.GetYear();
-			cout << "\n-------------------------------------" << endl;
+            cout << "TITLE: " << BookSearch.GetTitle() << " | "; //this to display the book informantions
+            cout << "AUTHOR: " << BookSearch.GetAuthor() << " | ";
+            cout << "ISBN: " << BookSearch.GetIsbn() << " | ";
+            cout << "PUBLISHER: " << BookSearch.GetPublisher() << " | ";
+            cout << "YEAR: " << BookSearch.GetYear();
+            cout << "\n-------------------------------------" << endl;
 
             cout << "\n" << endl;
         }
@@ -336,6 +382,7 @@ int main() {
     Book TheBook;   //this is the Book class object
     library TheLibrary; //this is the library class object
 
+    TheLibrary.LoadFromFile(); //this to load the books from the file
     //this is the menu variables
     int choice;
 
@@ -435,4 +482,3 @@ int main() {
     return 0;
 
 }
-
